@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>柱形图入门</title>
+    <!-- 1. 引入 echarts.js 文件-->
+    <script src="lib/echarts.js"></script>
+
+</head>
+<body>
+<!-- 2. 准备一个呈现图表的盒子 div -->
+<div style="width: 600px;height: 400px"></div>
+
+<script>
+    // 3. 初始化 echarts 实例对象
+    // 参数，dom，决定图表最终呈现的位置
+    var mCharts = echarts.init(document.querySelector('div'));
+    <!-- 4. 准备配置项 -->
+    var option = {
+        title: {
+            text: "成绩", // 标题文字
+            textStyle: {
+                color: 'red' // 文字颜色
+            },
+            borderWidth: 5, // 标题边框
+            borderColor: 'blue', // 标题边框颜色
+            borderRadius: 5, // 标题边框圆角
+            left: 20, // 标题的位置
+            top: 20 // 标题的位置
+        },
+        tooltip: {
+            // trigger: 'item' ：鼠标移动到柱体
+            trigger: 'axis', //  鼠标移到柱体内坐标轴
+            triggerOn: 'click', //  默认是 mousemove
+            // formatter: '{b} 的成绩是 {c}'
+            formatter: function (arg) {    //  回调函数
+                console.log(arg);
+                return arg[0].name  + ' 的分数是 ' + arg[0].data;
+            }
+        },
+        toolbox: {
+            feature:{
+                saveAsImage:{}, //  导出图片
+                dataView: {},   //  数据视图
+                restore: {}, // 重置
+                dataZoom: {},    //  区域缩放
+                magicType: {    //  动态图标类型切换
+                    type:[  //  数组
+                        'bar',
+                        'line'
+                    ]
+                }
+            }
+        },
+        xAxis: {
+            type: 'category',
+            data: ['小明', '小红', '小王']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '语文',
+                type: 'bar', // line：折线图
+                data:[70, 92, 87],
+                itemStyle:{
+                    color: 'red'
+                }
+            }
+        ]
+    }
+    <!-- 5. 将配置项设置给 echarts 实例对象 -->
+    mCharts.setOption(option)
+</script>
+</body>
+</html>

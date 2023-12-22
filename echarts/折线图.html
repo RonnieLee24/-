@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>折线图入门</title>
+    <script src="lib/echarts.js"></script>
+</head>
+<body>
+
+<div style="width: 600px;height:400px"></div>
+
+<script>
+    var xDataArr = ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+    var yDataArr1 = [120, 132, 101, 134, 90, 230, 210]
+    var yDataArr2 = [20, 82, 191, 94, 290, 330, 310]
+
+    var mCharts = echarts.init(document.querySelector("div"))
+    var option = {
+        xAxis: {
+            type: 'category',
+            data: xDataArr,
+            boundaryGap: false
+        },
+        yAxis: {
+            type: 'value',
+            scale: true
+        },
+        series: [
+            {
+                type: 'line',
+                data: yDataArr1,
+                lineStyle: {    //  线条样式
+                    color: 'red',
+                    type: 'dashed' // 可选值还有 dotted solid
+                },
+                stack: 'all',// series中的每一个对象配置相同的stack值, 这个all可以任意写,
+                areaStyle: {}
+            },
+            {
+                type: 'line',
+                data: yDataArr2,
+                lineStyle: {    //  线条样式
+                    color: 'blue',
+                    type: 'dashed' // 可选值还有 dotted solid
+                },
+                stack: 'all', // series中的每一个对象配置相同的stack值, 这个all可以任意写
+                areaStyle: {}
+            }
+        ]
+    }
+    mCharts.setOption(option)
+</script>
+</body>
+</html>

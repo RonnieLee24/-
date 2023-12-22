@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>柱形图入门</title>
+    <!-- 1. 引入 echarts.js 文件-->
+    <script src="lib/echarts.js"></script>
+
+</head>
+<body>
+<!-- 2. 准备一个呈现图表的盒子 div -->
+<div style="width: 600px;height: 400px"></div>
+
+<script>
+    // 3. 初始化 echarts 实例对象
+    // 参数，dom，决定图表最终呈现的位置
+    var mCharts = echarts.init(document.querySelector('div'));
+
+    //  准备数据
+    var xDataArr = ['张三', '李四', '王五', '闰土', '小明', '茅台', '二妞', '大强']
+    var yDataArr1 = [88, 92, 63, 77, 94, 80, 72, 86]
+    var yDataArr2 = [93, 60, 61, 62, 85, 79, 92, 30]
+
+
+    <!-- 4. 准备配置项 -->
+    var option = {
+        title: {
+            text: "成绩", // 标题文字
+            textStyle: {
+                color: 'red' // 文字颜色
+            },
+            borderWidth: 5, // 标题边框
+            borderColor: 'blue', // 标题边框颜色
+            borderRadius: 5, // 标题边框圆角
+            left: 20, // 标题的位置
+            top: 20 // 标题的位置
+        },
+
+        tooltip: {
+            // trigger: 'item' ：鼠标移动到柱体
+            trigger: 'axis', //  鼠标移到柱体内坐标轴
+            triggerOn: 'click', //  默认是 mousemove
+            // formatter: '{b} 的成绩是 {c}'
+            formatter: function (arg) {    //  回调函数
+                console.log(arg);
+                return arg[0].name  + ' 的分数是 ' + arg[0].data;
+            }
+        },
+
+        legend: {
+            data: ['语文', '数学']  //  系列筛选 【和 series中的 name 保持一致】
+
+        },
+
+        xAxis: {
+            type: 'category',
+            data: xDataArr
+        },
+        yAxis: {
+            type: 'value',
+
+        },
+        series: [
+            {
+                name: '语文',
+                type: 'bar', // line：折线图
+                data: yDataArr1,
+                itemStyle:{
+                    color: 'red'
+                },
+                markPoint:{ //  极值
+                    data:[
+                        {
+                            type: 'max', name: '最大值'
+                        },
+                        {
+                            type: "min", name: '最小值'
+                        }
+                    ]
+                },
+                markLine:{  //  平均值
+                    data:[
+                        {
+                            type: 'average', name: '平均值'
+                        }
+                    ]
+                },
+                label:{
+                    show: true, //  是否可见
+                    rotate: 60  //  是否旋转
+                },
+                barWidth: '30%' //  柱宽度
+            },
+
+            {
+                name: '数学',
+                type: 'bar', // line：折线图
+                data: yDataArr2,
+                itemStyle:{
+                    color: 'blue'
+                },
+                markPoint:{ //  极值
+                    data:[
+                        {
+                            type: 'max', name: '最大值'
+                        },
+                        {
+                            type: "min", name: '最小值'
+                        }
+                    ]
+                },
+                markLine:{  //  平均值
+                    data:[
+                        {
+                            type: 'average', name: '平均值'
+                        }
+                    ]
+                },
+                label:{
+                    show: true, //  是否可见
+                    rotate: 60  //  是否旋转
+                },
+                barWidth: '30%' //  柱宽度
+            }
+
+        ]
+    }
+    <!-- 5. 将配置项设置给 echarts 实例对象 -->
+    mCharts.setOption(option)
+</script>
+</body>
+</html>
